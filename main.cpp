@@ -1,13 +1,16 @@
 #include <iostream>
-#include<string>
+#include <string>
 #include "BigNumber.h"
+#include "NumberGenerator.h"
 
 int main() {
-    BigNumber a("12345");
+    NumberGenerator gen;
+    
+    BigNumber a = gen.generate(5);
     std::cout << a.toString() << std::endl;
-
-    BigNumber b("12345", true);
+    
+    BigNumber b = gen.generate(3);
     std::cout << b.toString() << std::endl;
-
+    
     return 0;
 }
