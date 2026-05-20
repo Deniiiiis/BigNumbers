@@ -4,17 +4,21 @@
 #include "NumberGenerator.h"
 
 int main() {
-BigNumber a("1");
-BigNumber b("2");
-std::cout << BigNumber::compareValues(a, b) << std::endl;
+    BigNumber a("2");
+    BigNumber b("1");
+    std::cout << (a + b).toString() << std::endl;
 
-BigNumber c("1");
-BigNumber d("1");
-std::cout << BigNumber::compareValues(c, d) << std::endl;
+    BigNumber c("100");
+    BigNumber d("50", true);
+    std::cout << (c + d).toString() << std::endl;
 
-BigNumber e("2");
-BigNumber f("1");
-std::cout << BigNumber::compareValues(e, f) << std::endl;
-    
+    BigNumber e("4", true);
+    BigNumber f("20", true);
+    std::cout << (e + f).toString() << std::endl;
+
+    BigNumber g("3");
+    BigNumber h("120", true);
+    std::cout << (g + h).toString() << std::endl;
+
     return 0;
 }

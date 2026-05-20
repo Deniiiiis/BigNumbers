@@ -44,11 +44,36 @@ BigNumber BigNumber::addAbsolute(const BigNumber& a, const BigNumber& b){
     return result;
 }
 
-BigNumber BigNumber::operator+(const BigNumber& other) const {
-    if (negative_ == other.negative_) {
+BigNumber BigNumber::subtractValues(const BigNumber& a, const BigNumber& b){
+    BigNumber result;
+    result.digits_.clear();
+    int borrow = 0;
+    for(int i = 0; i < (int)a.digits_.size(); i++){
+        int diff = a.digits_[i] - borrow;
+        if(i < (int)b.digits_.size()) diff -= b.digits_[i];
+        if(diff < 0){diff += 10; borrow = 1;}
+        else borrow = 0;
+        result.digits_.push_back(diff);
+    }
+    while(result.digits_.size() > 1 && result.digits_.back() == 0)
+        result.digits_.pop_back();
+    return result;
+}
+
+BigNumber BigNumber::operator+(const BigNumber& other)const{
+    if(negative_ == other.negative_){
         BigNumber result = addAbsolute(*this, other);
         result.negative_ = negative_;
         return result;
+    }else{
+        if(compareValues(*this, other) >= 0){
+            BigNumber result = subtractValues(*this, other);
+            result.negative_ = negative_;
+            return result;
+        }else{
+            BigNumber result = subtractValues(other, *this);
+            result.negative_ = other.negative_;
+            return result;
+        }
     }
-    return *this;
 }
