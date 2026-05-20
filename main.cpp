@@ -4,21 +4,16 @@
 #include "NumberGenerator.h"
 
 int main() {
-    BigNumber a("2");
-    BigNumber b("1");
-    std::cout << (a + b).toString() << std::endl;
+    NumberGenerator gen;
+    BigNumber sum;
 
-    BigNumber c("100");
-    BigNumber d("50", true);
-    std::cout << (c + d).toString() << std::endl;
+    for(int i = 1; i <= 50; i++){
+        BigNumber num = gen.generate(i);
+        std::cout << "Number " << i << ".:" << num.toString() << std::endl;
+        sum = sum+num;
+    }
 
-    BigNumber e("4", true);
-    BigNumber f("20", true);
-    std::cout << (e + f).toString() << std::endl;
-
-    BigNumber g("3");
-    BigNumber h("120", true);
-    std::cout << (g + h).toString() << std::endl;
+    std::cout << "Sum: " << sum.toString() << std::endl;
 
     return 0;
 }
