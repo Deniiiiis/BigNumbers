@@ -19,6 +19,15 @@ std::string BigNumber::toString(){
     return result;
 }
 
+int BigNumber::compareValues(const BigNumber& a, const BigNumber& b) {
+    if (a.digits_.size() != b.digits_.size())
+        return a.digits_.size() > b.digits_.size() ? 1 : -1;
+    for (int i = (int)a.digits_.size() - 1; i >= 0; i--) {
+        if (a.digits_[i] != b.digits_[i])
+            return a.digits_[i] > b.digits_[i] ? 1 : -1;
+    }
+    return 0;
+}
 
 BigNumber BigNumber::addAbsolute(const BigNumber& a, const BigNumber& b){
     BigNumber result;

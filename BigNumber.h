@@ -8,6 +8,7 @@ class BigNumber{
         BigNumber(const std::string& number, bool negative = false);
         std::string toString();
         BigNumber operator+(const BigNumber& other) const;
+        static int compareValues(const BigNumber& a, const BigNumber& b);
 
     private:
         std::vector<int> digits_;
