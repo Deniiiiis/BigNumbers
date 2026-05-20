@@ -6,8 +6,9 @@ class BigNumber{
     public:
         BigNumber();
         BigNumber(const std::string& number, bool negative = false);
-        std::string toString();
+        std::string toString() const;
         BigNumber operator+(const BigNumber& other) const;
+        std::string firstTen() const;
     private:
         std::vector<int> digits_;
         bool negative_;

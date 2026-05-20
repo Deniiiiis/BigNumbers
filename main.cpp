@@ -13,7 +13,7 @@ int main() {
         sum = sum+num;
     }
 
-    std::cout << "Sum: " << sum.toString() << std::endl;
+    std::cout << "First 10 digits of the sum: " << sum.firstTen() << std::endl;
 
     return 0;
 }

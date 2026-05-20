@@ -11,7 +11,7 @@ BigNumber::BigNumber(const std::string& number, bool negative){
     }
 }
 
-std::string BigNumber::toString(){
+std::string BigNumber::toString() const{
     std::string result = negative_ ? "-" : "";
     for(int n = digits_.size() - 1; n >= 0; n--){
         result += ('0' + digits_[n]);
@@ -76,4 +76,13 @@ BigNumber BigNumber::operator+(const BigNumber& other)const{
             return result;
         }
     }
+}
+
+std::string BigNumber::firstTen()const{
+    std::string all = toString();
+    std::string sign = negative_ ? "-" : "";
+    std::string numPart = negative_ ? all.substr(1) : all;
+    if((int)numPart.size() <= 10)
+    return all;
+    return sign + numPart.substr(0, 10);
 }
