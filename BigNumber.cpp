@@ -1,9 +1,11 @@
 #include "BigNumber.h"
 
-BigNumber::BigNumber(){
+// Empty constructor - digits_ is empty, negative_ is false by default
+BigNumber::BigNumber(){}
 
-}
-
+// Iterates string from right to left so least significant digit is stored first
+// e.g. "123" -> digits_ = [3,2,1]
+// '5' - '0' = 5 converts char digit to int
 BigNumber::BigNumber(const std::string& number, bool negative){
     negative_ = negative;
     for(int i = number.size() - 1; i >= 0; i--){
@@ -11,6 +13,9 @@ BigNumber::BigNumber(const std::string& number, bool negative){
     }
 }
 
+// Iterates digits from back to front (most significant first)
+// 5 + '0' = '5' converts int back to char
+// Prepends '-' if number is negative
 std::string BigNumber::toString() const{
     std::string result = negative_ ? "-" : "";
     for(int n = digits_.size() - 1; n >= 0; n--){
@@ -19,6 +24,9 @@ std::string BigNumber::toString() const{
     return result;
 }
 
+// A number with more digits is always larger
+// If digit count is equal, compare from most significant digit
+// Returns 1, -1 or 0 so caller knows which number is larger
 int BigNumber::compareValues(const BigNumber& a, const BigNumber& b) {
     if (a.digits_.size() != b.digits_.size())
         return a.digits_.size() > b.digits_.size() ? 1 : -1;
@@ -29,6 +37,9 @@ int BigNumber::compareValues(const BigNumber& a, const BigNumber& b) {
     return 0;
 }
 
+// Works like addition on paper - go digit by digit, carry the overflow
+// carry = 1 when sum >= 10, gets added to next digit
+// Loop continues until carry is 0 to handle final overflow e.g. 999 + 1 = 1000
 BigNumber BigNumber::addAbsolute(const BigNumber& a, const BigNumber& b){
     BigNumber result;
     result.digits_.clear();
@@ -44,6 +55,9 @@ BigNumber BigNumber::addAbsolute(const BigNumber& a, const BigNumber& b){
     return result;
 }
 
+// Works like subtraction on paper - borrow from next digit when diff < 0
+// borrow = 1 reduces next digit by 1, adds 10 to current digit
+// Leading zeros removed at end e.g. 100 - 99 = 001 -> 1
 BigNumber BigNumber::subtractValues(const BigNumber& a, const BigNumber& b){
     BigNumber result;
     result.digits_.clear();
@@ -60,6 +74,9 @@ BigNumber BigNumber::subtractValues(const BigNumber& a, const BigNumber& b){
     return result;
 }
 
+// Same sign: add absolute values, keep the sign
+// Different sign: subtract smaller from larger
+// Result gets sign of the number with larger absolute value
 BigNumber BigNumber::operator+(const BigNumber& other)const{
     if(negative_ == other.negative_){
         BigNumber result = addAbsolute(*this, other);
@@ -78,6 +95,8 @@ BigNumber BigNumber::operator+(const BigNumber& other)const{
     }
 }
 
+// Removes minus sign before slicing so it is not counted as a digit
+// e.g. "-1234567890123" -> sign="-", numPart="1234567890123" -> "-1234567890"
 std::string BigNumber::firstTen()const{
     std::string all = toString();
     std::string sign = negative_ ? "-" : "";
